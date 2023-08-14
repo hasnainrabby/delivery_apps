@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
               
               const Padding(
                 padding: EdgeInsets.all(18.0),
-                child: Text("Dina's Kitchen",
+                child: Text("Online Kitchen",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontFamily: "Signatra",
