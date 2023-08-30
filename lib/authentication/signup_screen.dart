@@ -11,6 +11,8 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -20,7 +22,15 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController addressController = TextEditingController();
 
   XFile? imageXfile;
-  //final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _getImage() async {
+    imageXfile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      imageXfile;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +38,9 @@ class _SignupScreenState extends State<SignupScreen> {
       child: Container(
         child: Column(
           children: [
+            const SizedBox(height: 20,),
             InkWell(
+              onTap: (){ _getImage();},
               child: CircleAvatar(
                 radius: MediaQuery.of(context).size.width * 0.20,
                 backgroundColor: Colors.white,
@@ -47,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(
               height: 10.0,
             ),
-            Form(
+            Form(                            // Build a Form widget using the _formKey created above.
               key: _formKey,
               child: Column(
                 children: [
@@ -95,7 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0))),
+                              borderRadius: BorderRadius.circular(15.0))),
                       label: const Text(
                         "Get my Current Location",
                         style: TextStyle(color: Colors.white),
@@ -107,11 +119,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 30.0,),
+            const SizedBox(height: 20.0,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
-                padding: const EdgeInsets.symmetric(horizontal: 50.0,vertical: 20.0)
+                padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 10.0)
               ),
                 onPressed: ()=> print("Button clicked"),
                 child:const Text("Sign Up",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400),))

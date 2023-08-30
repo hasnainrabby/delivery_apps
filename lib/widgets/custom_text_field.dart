@@ -20,10 +20,10 @@ class CustomTextField extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(5.0))
+        borderRadius: BorderRadius.all(Radius.circular(15.0))
       ),
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
       child: TextFormField(
         enabled: enable,
         controller: textController,
