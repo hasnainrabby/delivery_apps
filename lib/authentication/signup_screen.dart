@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:delivery_apps/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -24,12 +26,32 @@ class _SignupScreenState extends State<SignupScreen> {
   XFile? imageXfile;
   final ImagePicker _picker = ImagePicker();
 
+  Position? position;
+  List<Placemark>? placeMark;
+  LocationPermission? permission;
+
   Future<void> _getImage() async {
     imageXfile = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       imageXfile;
     });
+  }
+
+  getCurrentLocation() async{
+    permission = await Geolocator.requestPermission();
+    Position newPosition = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,);//high for accurate location,for Rider use bestforNavigation.
+
+    position = newPosition;
+    placeMark = await placemarkFromCoordinates(position!.latitude,position!.longitude);
+
+    Placemark pMark = placeMark![0];
+
+    String completeAddress ='${pMark.subThoroughfare},${pMark.thoroughfare},${pMark.subLocality},${pMark.locality},'
+        '${pMark.subAdministrativeArea},${pMark.administrativeArea},${pMark.postalCode},${pMark.country}';
+
+    addressController.text = completeAddress;
   }
 
   @override
@@ -96,7 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   CustomTextField(
                     iconData: Icons.location_on,
                     textController: addressController,
-                    hintText: "Cafe/Restaurant Address",
+                    hintText:"Cafe/Restaurant Address",
                     isObscure: false,
                     enable: false,
                   ),
@@ -112,7 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         "Get my Current Location",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () => print("clicked"),
+                      onPressed: () => getCurrentLocation(),
                       icon: const Icon(Icons.location_on),
                     ),
                   )

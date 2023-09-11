@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "46418541502",
+    "project_id": "delivery-app-5ef92",
+    "storage_bucket": "delivery-app-5ef92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46418541502:android:3696c0c0ab2240486e17ef",
+        "android_client_info": {
+          "package_name": "com.hasnain.delivery_apps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfaagp2dnpj1xmtLIT9AwiAWjQCUzaynU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
