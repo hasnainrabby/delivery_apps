@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:delivery_apps/widgets/custom_text_field.dart';
+import 'package:delivery_apps/widgets/error_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -30,12 +31,60 @@ class _SignupScreenState extends State<SignupScreen> {
   List<Placemark>? placeMark;
   LocationPermission? permission;
 
-  Future<void> _getImage() async {
+  Future<void> _getImage() async
+  {
     imageXfile = await _picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       imageXfile;
     });
+  }
+
+  Future<void> formValidation() async
+  {
+    if(imageXfile == null)
+    {
+      showDialog(
+          context: context,
+          builder: (c)
+          {
+            return ErrorDialog(message: "Please select your image.",);
+          });
+    }
+    else
+    {
+      if(passwordController.text == confirmPasswordController.text)
+      {
+
+
+        if(confirmPasswordController.text.isNotEmpty
+            && emailController.text.isNotEmpty
+            && nameController.text.isNotEmpty
+            && phoneController.text.isNotEmpty
+            && addressController.text.isNotEmpty)
+        {
+          //start uploading image on firebase.
+        }
+        else{
+          showDialog(
+              context: context,
+              builder: (c)
+              {
+                return ErrorDialog(message: "Please write required field for Registration.");
+              });
+        }
+      }
+      else
+      {
+        showDialog(
+            context: context,
+            builder: (c)
+            {
+              return ErrorDialog(message: "Password do not match.Please check...",);
+            });
+      }
+    }
+
   }
 
   getCurrentLocation() async{
@@ -147,7 +196,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 backgroundColor: Colors.cyan,
                 padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 10.0)
               ),
-                onPressed: ()=> print("Button clicked"),
+                onPressed: ()=> formValidation,
                 child:const Text("Sign Up",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w400),))
           ],
         ),
